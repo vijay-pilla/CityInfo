@@ -1,0 +1,210 @@
+Angular
+1. Basic Building Blocks of Angular
+Angular is composed of several key building blocks:
+
+Components: Control a part of the UI. They consist of HTML, CSS, and logic in TypeScript.
+Modules: Organize the application into cohesive blocks of functionality.
+Services: Contain logic for fetching data or performing operations.
+Directives: Modify the behavior of elements in the DOM.
+Pipes: Transform data for display in the UI.
+Routing: Defines navigation between components.
+2. What is a Component?
+A component controls a portion of the user interface and is defined using:
+
+Template: HTML that defines what the UI looks like.
+Class: Contains logic and data for the component.
+Metadata (Decorator): Defines metadata such as the selector, template, and styles.
+Example:
+
+typescript
+Copy code
+@Component({
+  selector: 'app-example',
+  template: `<h1>{{title}}</h1>`
+})
+export class ExampleComponent {
+  title = 'Hello World';
+}
+3. Component Lifecycle Hooks
+Angular provides lifecycle hooks for various phases of a component's existence. Common hooks include:
+
+ngOnInit(): Called after the component is initialized.
+ngOnChanges(): Called when input properties change.
+ngOnDestroy(): Called just before the component is destroyed.
+Example:
+
+typescript
+Copy code
+ngOnInit() {
+  console.log('Component initialized');
+}
+4. Binding in Angular
+There are four types of data binding in Angular:
+
+Interpolation: {{ data }}
+Property binding: [property]="data"
+Event binding: (event)="handler($event)"
+Two-way binding: [(ngModel)]="data"
+Example:
+
+html
+Copy code
+<input [(ngModel)]="name" />
+<p>{{ name }}</p>
+5. Passing Data Between Parent and Child Component
+You can pass data from a parent to a child component using the @Input decorator.
+
+Example:
+
+typescript
+Copy code
+// Parent Component
+<app-child [childData]="parentData"></app-child>
+
+// Child Component
+@Input() childData: string;
+6. Pass Data Using Services
+Services are singleton objects that can share data across components. You inject them using dependency injection (DI).
+
+Example:
+
+typescript
+Copy code
+@Injectable({
+  providedIn: 'root',
+})
+export class DataService {
+  data: string;
+}
+7. What is a Directive?
+Directives are instructions in the DOM. They fall into three types:
+
+Attribute Directives: Change the appearance or behavior of an element.
+Structural Directives: Change the structure by adding or removing elements.
+Component Directives: Create reusable components.
+8. How to Create Custom Directive?
+To create a custom directive:
+
+typescript
+Copy code
+@Directive({
+  selector: '[appHighlight]'
+})
+export class HighlightDirective {
+  @HostBinding('style.backgroundColor') bgColor = 'yellow';
+}
+9. Types of Directives
+Structural: *ngIf, *ngFor
+Attribute: ngClass, ngStyle
+Custom: Directives you define.
+10. What is a Pipe?
+Pipes transform data in templates. Example:
+
+html
+Copy code
+<p>{{ today | date }}</p>
+11. Async Pipes
+Async pipes handle asynchronous data streams such as Observables.
+
+html
+Copy code
+<p>{{ observableData$ | async }}</p>
+12. Pure and Impure Pipes
+Pure Pipes: Depend only on input and are executed only when the input changes.
+Impure Pipes: Executed every time change detection runs, regardless of input changes.
+13. Metadata or Decorator
+Decorators are used to attach metadata to a class. Example:
+
+typescript
+Copy code
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+})
+14. Modules
+Angular applications are modular. A module is defined using @NgModule:
+
+typescript
+Copy code
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+15. Services
+Services provide shared functionality across components. Example:
+
+typescript
+Copy code
+@Injectable({
+  providedIn: 'root',
+})
+export class UserService {
+  getUser() {
+    return 'John Doe';
+  }
+}
+16. Http Interceptors
+Http Interceptors are used to modify HTTP requests and responses.
+HTTP Interceptors in Angular are classes that implement the HttpInterceptor interface.
+They can be used to perform various tasks related to HTTP requests and responses, such as adding headers, handling errors,
+modifying the request or response data, logging, authentication, etc. 
+Example:
+
+typescript
+Copy code
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    const clonedRequest = req.clone({ headers: req.headers.set('Authorization', 'Bearer token') });
+    return next.handle(clonedRequest);
+  }
+}
+17. Routing and Route Guard
+Routing in Angular handles navigation. Route guards (like CanActivate) control access to routes.
+
+18. router-outlet
+<router-outlet> is a placeholder where routed components are displayed.
+
+19. Wildcard Route
+A wildcard route catches undefined paths.
+
+typescript
+Copy code
+{ path: '**', component: PageNotFoundComponent }
+20. Bootstrapping
+Bootstrapping initializes the root module and component of an Angular app.
+
+21. Angular CLI
+Angular CLI is a command-line interface for generating components, services, and modules.
+
+Example:
+
+bash
+Copy code
+ng generate component my-component
+22. Global Error Handler
+You can create a global error handler using ErrorHandler.
+
+23. Observables vs Promise
+Observable: Can emit multiple values and can be canceled.
+Promise: Handles a single value and cannot be canceled.
+24. Template-driven Form Validation
+Template-driven forms use Angular directives like ngModel.
+
+25. Reactive Forms Validation
+Reactive forms are model-driven and use FormControl and FormGroup.
+
+26. Authorization in Angular
+You can use route guards and services to implement authorization.
+
+27. Change Detection Strategy
+Angular provides two strategies: Default and OnPush. OnPush optimizes by detecting changes only for input-bound data.
+
+28. RxJs
+RxJs is a library for handling asynchronous operations using Observables.
+
+29. Tree Shaking
+Tree shaking removes unused code during the build process, improving performance.
